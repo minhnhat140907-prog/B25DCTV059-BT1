@@ -1,0 +1,102 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Máy tính đơn giản</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            text-align: left;
+            background-color: white;
+            color:black;
+        }
+        body.dark-mode {
+            background-color: #222222; /* Màu nền tối khi bấm nút */
+            color: white;
+        }
+        button {
+            font-size: 22px;
+            align-items: center;
+            text-align: center;
+        }
+        main {
+            text-align: center;
+            color: aqua;
+            font-size: large;
+        }
+        table {
+            font-size: large;
+            color:crimson;
+        }
+    </style>
+</head>
+<main>Lưu ý khi bấm clear giá trị về 0 hay bị lỗi phép tính thì hãy bấm del 4 lần để giá trị trở lại ban đầu</main>
+<body>
+    <h1>Máy tính cơ bản </h1>
+    <div class="calculator">
+        <input type="text" id="screen">
+        <table border="1">
+            <caption>Hãy điền đúng dạng số</caption>
+            <tr><button onclick="appendValue('1')">1</button></tr>
+            <tr><button onclick="appendValue('2')">2</button></tr>
+            <tr><button onclick="appendValue('3')">3</button></tr>
+            <tr><button onclick="appendValue('4')">4</button></tr>
+            <tr><button onclick="appendValue('5')">5</button></tr>
+            <tr><button onclick="appendValue('6')">6</button></tr>
+            <tr><button onclick="appendValue('7')">7</button></tr>
+            <tr><button onclick="appendValue('8')">8</button></tr>
+            <tr><button onclick="appendValue('9')">9</button></tr>
+            <tr><button onclick="appendValue('0')">0</button></tr>
+            <tr><button onclick="appendValue('.')">.</button></tr>
+            <tr>
+                <td><button onclick="appendValue('+')">+</button></td>
+                <td><button onclick="appendValue('-')">-</button></td>
+                <td><button onclick="appendValue('x')">x</button></td>
+                <td><button onclick="appendValue(':')">:</button></td>
+                <td><button onclick="deleteLast()">DEL</button></td>
+                <td><button onclick="calculate()">=</button></td>
+                <td><button onclick="clearScreen('')">Ctrl</button></td>
+            </tr>
+        </table>
+    </div>
+    <footer><button id="toggleBtn">Đổi màu nền</button></footer>
+    <script>
+        const screen = document.getElementById("screen");
+
+        // Xử lý khi gõ phím trên máy tính thật
+        function handleKeyboard(event) {
+            if (event.key === 'Enter') {
+                calculate();
+            }
+        }
+
+        
+        function appendValue(val) {
+            screen.value += val;
+        }
+
+        
+        function clearScreen() {
+            screen.value = "0";
+        }
+
+        function deleteLast() {
+            screen.value = screen.value.slice(0, -1);
+        }
+
+
+        function calculate() {
+            try {
+                let expression = screen.value.replace(/x/g, '*').replace(/:/g, '/');
+                screen.value = eval(expression);
+            } catch (error) {
+                screen.value = "Lỗi!";
+            }
+        }
+        const toggleBtn = document.getElementById("toggleBtn");
+        toggleBtn.addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode")
+        });
+    </script>
+
+</body>
+</html>
